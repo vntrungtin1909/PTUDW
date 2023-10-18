@@ -163,7 +163,8 @@ namespace THW.Areas.Admin.Controllers
             categoriesDAO.Update(categories);
 
             //cap nhat trang thai thanh cong
-            TempData["message"] = ("cap nhat trang thai thanh cong");
+            TempData["message"] = new XMessage("success", "cap nhat trang thai thanh cong");
+            //TempData["message"] = ("cap nhat trang thai thanh cong");
             return RedirectToAction("Index");
         }
 
