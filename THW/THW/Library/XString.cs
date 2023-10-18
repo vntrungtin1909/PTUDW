@@ -54,10 +54,6 @@ namespace UDW.Library
             return str;
         }
 
-        internal static string Str_SLug(string name)
-        {
-            //throw new NotImplementedException();
-        }
     }
 
 }

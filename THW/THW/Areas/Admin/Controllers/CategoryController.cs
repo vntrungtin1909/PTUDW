@@ -75,7 +75,7 @@ namespace THW.Areas.Admin.Controllers
                 }
 
                 // xu li tu dong: slug
-                categories.Slug = XString.Str_SLug(categories.Name);
+                categories.Slug = XString.Str_Slug(categories.Name);
 
                 //chen them dong bo cho DB
                 categoriesDAO.Insert(categories);
@@ -163,7 +163,7 @@ namespace THW.Areas.Admin.Controllers
             categoriesDAO.Update(categories);
 
             //cap nhat trang thai thanh cong
-            TempData["message"] = TempData["message"] = new XMessage("success", "cap nhat trang thai thanh cong");
+            TempData["message"] = ("cap nhat trang thai thanh cong");
             return RedirectToAction("Index");
         }
 
