@@ -79,9 +79,13 @@ namespace THW.Areas.Admin.Controllers
 
                 //chen them dong bo cho DB
                 categoriesDAO.Insert(categories);
+
+                //thong bao them mau tin thanh cong
+                TempData["message"] = new XMessage("success", "them mau tin thanh cong");
                 return RedirectToAction("Index");
             }
-
+            ViewBag.CatList = new SelectList(categoriesDAO.getList("Index"), "Id", "Name");
+            ViewBag.OrderList = new SelectList(categoriesDAO.getList("Index"), "Order", "Name");
             return View(categories);
         }
 
@@ -90,13 +94,20 @@ namespace THW.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "cap nhat mẩu tin thất bại");
+                return RedirectToAction("Index");
             }
+            //tim dong DB can chinh sua
             Categories categories = categoriesDAO.getRow(id);
             if (categories == null)
             {
-                return HttpNotFound();
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "cap nhat mẩu tin that bai");
+                return RedirectToAction("Index");
             }
+            ViewBag.CatList = new SelectList(categoriesDAO.getList("Index"), "Id", "Name");
+            ViewBag.OrderList = new SelectList(categoriesDAO.getList("Index"), "Order", "Name");
             return View(categories);
         }
 
@@ -107,10 +118,40 @@ namespace THW.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                //xu li tu dong cho mau tin
+
+                //xu li tu dong thoi gian cap nhat
+                categories.UpdateAt = DateTime.Now;
+
+                // xu li tu dong: parentid
+                if (categories.ParentId == null)
+                {
+                    categories.ParentId = 0;
+                }
+
+                // xu li tu dong cho: order
+                if (categories.Order == null)
+                {
+                    categories.Order = 1;
+                }
+                else
+                {
+                    categories.Order += 1;
+                }
+
+                // xu li tu dong: slug
+                categories.Slug = XString.Str_Slug(categories.Name);
+
+                //cap nhat mau tin vao SQL
                 categoriesDAO.Update(categories);
+
+                //thogn bao thanh cong
+                TempData["message"] = new XMessage("success", "cập nhật mẫu tin thành công");
                 return RedirectToAction("Index");
                
             }
+            ViewBag.CatList = new SelectList(categoriesDAO.getList("Index"), "Id", "Name");
+            ViewBag.OrderList = new SelectList(categoriesDAO.getList("Index"), "Order", "Name");
             return View(categories);
         }
 
@@ -119,12 +160,16 @@ namespace THW.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
             }
             Categories categories = categoriesDAO.getRow(id);
             if (categories == null)
             {
-                return HttpNotFound();
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
             }
             return View(categories);
         }
@@ -135,9 +180,13 @@ namespace THW.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Categories categories = categoriesDAO.getRow(id);
+
             categoriesDAO.Delete(categories);
-           
-            return RedirectToAction("Index");
+
+            //thong bao thanh cong
+            TempData["message"] = new XMessage("success", "xóa mẫu tin thành  công");
+
+            return RedirectToAction("Trash");
         }
 
 
@@ -152,6 +201,12 @@ namespace THW.Areas.Admin.Controllers
             }
             //truy van id
             Categories categories = categoriesDAO.getRow(id);
+            if (categories == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "cap nhat trang thai that bai");
+                return RedirectToAction("Index");
+            }
 
             //chuyen doi trang thai cua status tu 1<->2
             categories.Status = (categories.Status == 1) ? 2 : 1;
@@ -168,5 +223,79 @@ namespace THW.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult MoveTrash(int? id)
+        {
+            //Categories categories = new Categories();
+            if (id == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+            //truy van id
+            Categories categories = categoriesDAO.getRow(id);
+            if (categories == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+
+            //chuyen doi trang thai cua status bang 0
+            categories.Status = 0;
+
+            //cap nhat gia tri updateAt
+            categories.UpdateAt = DateTime.Now;
+
+            //cap nhat database
+            categoriesDAO.Update(categories);
+
+            //thong bao thanh cong
+            TempData["message"] = new XMessage("success", "mẫu tin chuyển vào thùng rác thành công");
+            //TempData["message"] = ("cap nhat trang thai thanh cong");
+            return RedirectToAction("Index");
+        }
+
+        // TRASH
+        // GET: Admin/Category/Trash
+        public ActionResult Trash()
+        {
+            return View(categoriesDAO.getList("Trash"));//chi hien thi cac dong status bang = 0
+        }
+        
+
+        // RECOVER
+        public ActionResult Recover(int? id)
+        {
+            //Categories categories = new Categories();
+            if (id == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "phục hồi mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+            //truy van id
+            Categories categories = categoriesDAO.getRow(id);
+            if (categories == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "phục hồi mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+
+            //chuyen doi trang thai cua status bang 0
+            categories.Status = 2;
+
+            //cap nhat gia tri updateAt
+            categories.UpdateAt = DateTime.Now;
+
+            //cap nhat database
+            categoriesDAO.Update(categories);
+
+            //thong bao thanh cong
+            TempData["message"] = new XMessage("success", "phục hồi mẫu tin thành công");
+            //TempData["message"] = ("cap nhat trang thai thanh cong");
+            return RedirectToAction("Trash"); //action trong category
+        }
     }
 }
