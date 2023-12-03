@@ -226,12 +226,29 @@ namespace THW.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Suppliers suppliers = suppliersDAO.getRow(id);
-            //xoa nau tin ra khoi DB
-            suppliersDAO.Delete(suppliers);
-            TempData["message"] = new XMessage("success", "xoa nha cung cap thanh cong");
+            //Suppliers suppliers = suppliersDAO.getRow(id);
+            ////xoa nau tin ra khoi DB
+            //suppliersDAO.Delete(suppliers);
+            //TempData["message"] = new XMessage("success", "xoa nha cung cap thanh cong");
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            Suppliers suppliers = suppliersDAO.getRow(id);
+            //xu ly cho phan upload hinh anh
+            var img = Request.Files["img"];//lay thong tin file
+            string PathDir = "~/Public/img/supplier";
+            //xoa mau tin ra khoi DB
+            if (suppliersDAO.Delete(suppliers) == 1)
+            {
+                //Xu ly cho muc xoa hinh anh
+                if (suppliers.Img != null)
+                {
+                    string DelPath = Path.Combine(Server.MapPath(PathDir), suppliers.Img);
+                    System.IO.File.Delete(DelPath);
+                }
+            }
+            //thong bao xoa mau tin thanh cong
+            TempData["message"] = new XMessage("success", "Xóa nhà cung cấp thành công");
+            return RedirectToAction("Trash");
 
         }
 

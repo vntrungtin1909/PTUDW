@@ -1,0 +1,48 @@
+﻿﻿@model MyClass.Model.Products
+@{
+    ViewBag.Title = "ChitietSanpham";
+    Layout = "~/Views/Shared/LayoutSite.cshtml";
+}
+<style>
+    /* Custom CSS nếu cần */
+    .product-container {
+        margin-top: 50px; /* Thêm margin-top để căn giữa sản phẩm trên trang */
+    }
+
+    .product-image img {
+        max-width: 400px; /* Kích thước của hình ảnh */
+        height: auto;
+    }
+
+    .product-details {
+        text-align: left; /* Căn trái cho chi tiết sản phẩm */
+    }
+</style>
+
+
+    <div class="container text-center">
+        <!-- Sử dụng container của Bootstrap để căn giữa trên trang -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-image">
+                    <img src="~/Public/img/product/@Html.DisplayFor(model => model.Img)" width="250" height="250" class="img-fluid" alt="Product Image">
+                    <!-- Sử dụng lớp img-fluid của Bootstrap để làm cho hình ảnh phản ánh linh hoạt -->
+                </div>
+                <div class="product-price">
+                    @Html.DisplayFor(model => model.SalePrice)$
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-details">
+                    
+                    <div class="product-name">
+                        @Html.DisplayFor(model => model.Name)
+                    </div>
+                    <div class="product-description">
+                        @Html.DisplayFor(model => model.MetaDesc)
+                        <!-- Mô tả sản phẩm -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

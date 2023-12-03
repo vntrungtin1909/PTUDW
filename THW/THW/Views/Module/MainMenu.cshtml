@@ -24,7 +24,7 @@
                             if (item.TypeMenu == "category")
                             {
                                 <li class="nav-item active">
-                                    <a class="nav-link text-uppercase active" href="@item.Link">@item.Name</a>
+                                    <a class="nav-link text-uppercase active" href="@Url.Action("DSLoaiSP", "Site", new {name = item.Name})">@item.Name</a>
                                 </li>
                             }
 
@@ -50,17 +50,18 @@
                     </ul>
                 </li>
                 @*San pham*@
-                <li class="nav-item submenu dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">SẢN PHẨM</a>
+                <li class="nav-item submenu dropdown" >
+                    @*<a  class="nav-link dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        href="@Url.Action("DSSanpham", "Site")">SẢN PHẨM</a>*@
+                    @Html.ActionLink("SẢN PHẨM", "DSSanpham", "Site", null, new {@class = "nav-link dropdown-toggle active" })
                     <ul class="dropdown-menu">
-                        @*bat dau tu cho nay*@
+                        @*bat dau tu cho nay  *@
                         @foreach (var item in Model)
                         {
                             if (item.TypeMenu == "product")
                             {
                                 <li class="nav-item active">
-                                    <a class="nav-link text-uppercase active" href="@item.Link">@item.Name</a>
+                                    <a class="nav-link text-uppercase active" href="@Url.Action("ChitietSanpham", "Site", new {id = item.Id})">@item.Name</a>
                                 </li>
                             }
 
@@ -87,6 +88,7 @@
                 <li class="nav-item"><button><i class="ti-search"></i></button></li>
                 <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
                 <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+                <li class="nav-item"><a class="button button-header" href="@Url.Action("Index", "Login", new {area = "Admin"})">Đăng nhập</a></li>
             </ul>
         </div>
     </div>

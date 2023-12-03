@@ -17,7 +17,7 @@ namespace MyClass.DAO
         {
             return db.Menus.ToList();
         }
-
+        
         public List<Menus> getListByParentId(int parentid = 0)
         {
             return db.Menus

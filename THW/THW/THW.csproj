@@ -130,9 +130,13 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\SupplierController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Common\Vari.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Global.asax.cs">
@@ -140,6 +144,7 @@
     </Compile>
     <Compile Include="Library\XMessage.cs" />
     <Compile Include="Library\XString.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -2542,6 +2547,10 @@
     <Content Include="Public\vendors\themify-icons\SVG\zoom-in.svg" />
     <Content Include="Public\vendors\themify-icons\SVG\zoom-out.svg" />
     <Content Include="Public\vendors\themify-icons\themify-icons.css" />
+    <Content Include="Public\web\css\font-awesome.min.css" />
+    <Content Include="Public\web\css\style.css" />
+    <Content Include="Public\web\images\banner.jpg" />
+    <Content Include="Public\web\images\content.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2698,10 +2707,20 @@
     <Content Include="Areas\Admin\Views\Menu\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Trash.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Public\web\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Public\web\fonts\fontawesome-webfont.woff" />
+    <Content Include="Public\web\fonts\fontawesome-webfont.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2726,11 +2745,13 @@
     <Content Include="Views\Site\Index.cshtml" />
     <Content Include="Views\Shared\LayoutSite.cshtml" />
     <Content Include="Views\Module\MainMenu.cshtml" />
+    <Content Include="Views\Site\ChitietSanpham.cshtml" />
+    <Content Include="Views\Site\DSSanpham.cshtml" />
+    <Content Include="Views\Site\DSLoaiSP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Public\img\Supplier\" />
   </ItemGroup>
   <ItemGroup>

@@ -35,8 +35,6 @@ namespace MyClass.Model
         public string Gender { get; set; }  
         public string Address { get; set; }
 
-        public string MetaKey { get; set; }
-
         public int CreateBy { get; set; }
 
         public DateTime CreateAt { get; set; }
@@ -44,7 +42,6 @@ namespace MyClass.Model
         public int? UpdateBy { get; set; }
 
         public DateTime? UpdateAt { get; set; }
-
-        public int Status { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -289,12 +289,16 @@ namespace THW.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
             }
             Menus menus = menusDAO.getRow(id);
             if (menus == null)
             {
-                return HttpNotFound();
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
             }
             return View(menus);
         }
@@ -305,8 +309,88 @@ namespace THW.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Menus menus = menusDAO.getRow(id);
+
             menusDAO.Delete(menus);
+
+            //thong bao thanh cong
+            TempData["message"] = new XMessage("success", "xóa mẫu tin thành  công");
+
+            return RedirectToAction("Trash");
+        }
+
+        public ActionResult MoveTrash(int? id)
+        {
+            //Categories categories = new Categories();
+            if (id == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+            //truy van id
+            Menus menus = menusDAO.getRow(id);
+            if (menus == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "xóa mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+
+            //chuyen doi trang thai cua status bang 0
+            menus.Status = 0;
+
+            //cap nhat gia tri updateAt
+            menus.UpdateAt = DateTime.Now;
+
+            //cap nhat database
+            menusDAO.Update(menus);
+
+            //thong bao thanh cong
+            TempData["message"] = new XMessage("success", "mẫu tin chuyển vào thùng rác thành công");
+            //TempData["message"] = ("cap nhat trang thai thanh cong");
             return RedirectToAction("Index");
+        }
+
+        // TRASH
+        // GET: Admin/Category/Trash
+        public ActionResult Trash()
+        {
+            return View(menusDAO.getList("Trash"));//chi hien thi cac dong status bang = 0
+        }
+
+
+        // RECOVER
+        public ActionResult Recover(int? id)
+        {
+            //Categories categories = new Categories();
+            if (id == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "phục hồi mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+            //truy van id
+            Menus menus = menusDAO.getRow(id);
+            if (menus == null)
+            {
+                //thong bao that bai
+                TempData["message"] = new XMessage("danger", "phục hồi mẫu tin thất bại");
+                return RedirectToAction("Index");
+            }
+
+            //chuyen doi trang thai cua status bang 0
+            menus.Status = 2;
+
+            //cap nhat gia tri updateAt
+            menus.UpdateAt = DateTime.Now;
+
+            //cap nhat database
+            menusDAO.Update(menus);
+
+            //thong bao thanh cong
+            TempData["message"] = new XMessage("success", "phục hồi mẫu tin thành công");
+
+            return RedirectToAction("Trash"); 
         }
     }
 }

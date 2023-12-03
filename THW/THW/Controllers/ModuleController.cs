@@ -11,11 +11,11 @@ namespace THW.Controllers
     public class ModuleController : Controller
     {
         MenusDAO menusDAO = new MenusDAO();
-        // GET: Module
+        ///////////////////////////////////////////////////////////////////
+        //GET: MainMenu
         public ActionResult MainMenu()
         {
-            List<Menus> list = menusDAO.getListByParentId(0);
-           return View("MainMenu", list);
+            return View(menusDAO.getListByParentId(0));
         }
     }
 }

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MyClass.Model.Products>
+@{
+    ViewBag.Title = "DSLoaiSP";
+    Layout = "~/Views/Shared/LayoutSite.cshtml";
+}
+
+<div class="product__list clearfix mt--30">
+    <!-- Start Single Category -->
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-lg-3 col-sm-4 col-xs-12">
+
+                <div class="category">
+                    <div class="ht__cat__thumb">
+                        <a href="@Url.Action("ChitietSanpham", "Site", new { id = item.Id })">
+                            <img src="~/Public/img/product/@item.Img" width="250" height="250" alt="product images">
+                        </a>
+                    </div>
+
+                    <div class="fr__product__inner">
+                        <h4><a href="@Url.Action("ChitietSanpham", "Site", new { id = item.Id })">@item.Name</a></h4>
+                        <ul class="fr__pro__prize">
+                            <li class="old__prize">@item.SalePrice$</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+    <!-- End Single Category -->
+    <!-- Start Single Category -->
+    <!-- End Single Category -->
+    <!-- Start Single Category -->
+
+</div>
+
